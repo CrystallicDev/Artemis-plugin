@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,6 +67,8 @@ import com.lunarclient.apollo.module.paynow.PayNowModuleImpl;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
 import com.lunarclient.apollo.module.saturation.SaturationModule;
+import com.lunarclient.apollo.module.serverlink.ServerLinkModule;
+import com.lunarclient.apollo.module.serverlink.ServerLinkModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -174,6 +176,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
             .addModule(PayNowModule.class, new PayNowModuleImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
+            .addModule(ServerLinkModule.class, new ServerLinkModuleImpl())
             .addModule(SaturationModule.class)
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
@@ -237,7 +240,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
 
     @Override
     public String getApolloVersion() {
-        return "1.2.4";
+        return "1.2.5";
     }
 
     @Override

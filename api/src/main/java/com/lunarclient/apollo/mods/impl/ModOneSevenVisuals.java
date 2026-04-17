@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import io.leangen.geantyref.TypeToken;
 
 /**
  * Revert certain visuals and animations to how they behaved on 1.7.
+ * Note: the settings of this mod are unique on 1.8, and don't carry over to later versions, and vice versa.
  *
  * @since 1.0.0
  */
@@ -40,6 +41,18 @@ public final class ModOneSevenVisuals {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("one-seven-visuals", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * 1.7: Right-clicking while breaking blocks will stop the block break.
+     *
+     * @since 1.2.5
+     */
+    public static final SimpleOption<Boolean> USE_ITEM_WHILE_DIGGING = SimpleOption.<Boolean>builder()
+        .comment("1.7: Right-clicking while breaking blocks will stop the block break")
+        .node("one-seven-visuals", "use-item-while-digging").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();

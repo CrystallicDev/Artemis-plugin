@@ -1,6 +1,6 @@
 name: Apollo-API-Example
 main: com.lunarclient.apollo.example.api.ApolloApiExamplePlatform
-version: 1.2.4
+version: 1.2.5
 author: Moonsworth
 softdepend: [ Apollo-Bukkit, Apollo-Folia ]
 api-version: 1.13
@@ -49,6 +49,8 @@ commands:
         description: "Pay Now!"
     richpresence:
         description: "Rich Presence!"
+    serverlink:
+        description: "Server Links!"
     saturation:
         description: "Saturation!"
     serverrule:

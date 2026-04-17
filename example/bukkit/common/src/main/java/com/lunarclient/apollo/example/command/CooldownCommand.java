@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ public class CooldownCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
+            player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayResource|remove|reset>");
             return true;
         }
 
@@ -53,6 +53,12 @@ public class CooldownCommand implements CommandExecutor {
             case "displayitem": {
                 cooldownExample.displayCooldownItemExample(player);
                 player.sendMessage("Displaying cooldown item....");
+                break;
+            }
+
+            case "displaywithstyle": {
+                cooldownExample.displayCooldownWithStyleExample(player);
+                player.sendMessage("Displaying cooldown with style....");
                 break;
             }
 
@@ -75,7 +81,7 @@ public class CooldownCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
+                player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayResource|remove|reset>");
                 break;
             }
         }

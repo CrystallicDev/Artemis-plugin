@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@ import org.bukkit.entity.Player;
 public abstract class CooldownExample extends ApolloModuleExample {
 
     public abstract void displayCooldownItemExample(Player viewer);
+
+    public abstract void displayCooldownWithStyleExample(Player viewer);
 
     public abstract void displayCooldownResourceExample(Player viewer);
 

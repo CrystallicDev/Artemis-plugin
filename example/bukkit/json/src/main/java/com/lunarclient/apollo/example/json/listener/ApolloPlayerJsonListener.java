@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,21 +42,22 @@ public class ApolloPlayerJsonListener implements Listener {
 
     private final ApolloExamplePlugin plugin;
 
-    private final Set<UUID> playersRunningApollo = new HashSet<>();
+    private static final Set<UUID> PLAYERS_RUNNING_APOLLO = new HashSet<>();
 
     public ApolloPlayerJsonListener(ApolloExamplePlugin plugin) {
         this.plugin = plugin;
 
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", (s, player, bytes) -> { });
-        messenger.registerIncomingPluginChannel(plugin, "apollo:json", (s, player, bytes) -> { });
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", new ApolloRoundtripJsonListener(plugin));
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", new ApolloPacketReceiveJsonListener(plugin));
         messenger.registerOutgoingPluginChannel(plugin, "apollo:json");
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     public void disable() {
-        this.playersRunningApollo.clear();
+        PLAYERS_RUNNING_APOLLO.clear();
 
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.unregisterIncomingPluginChannel(this.plugin, "lunar:apollo");
@@ -78,7 +79,7 @@ public class ApolloPlayerJsonListener implements Listener {
         // Sending the player's world name to the client is required for some modules
         JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
 
-        this.playersRunningApollo.add(player.getUniqueId());
+        PLAYERS_RUNNING_APOLLO.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");
     }
 
@@ -97,8 +98,8 @@ public class ApolloPlayerJsonListener implements Listener {
         return message;
     }
 
-    private boolean isPlayerRunningApollo(Player player) {
-        return this.playersRunningApollo.contains(player.getUniqueId());
+    public static boolean isPlayerRunningApollo(Player player) {
+        return PLAYERS_RUNNING_APOLLO.contains(player.getUniqueId());
     }
 
 }

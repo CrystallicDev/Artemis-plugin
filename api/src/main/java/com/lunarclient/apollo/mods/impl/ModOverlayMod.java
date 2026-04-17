@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,30 +78,6 @@ public final class ModOverlayMod {
     public static final NumberOption<Float> SHIELD_HEIGHT = NumberOption.<Float>number()
         .node("overlay-mod", "shield-height").type(TypeToken.get(Float.class))
         .min(0.0F).max(2.0F)
-        .defaultValue(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final NumberOption<Float> TOTEM_SCALE = NumberOption.<Float>number()
-        .node("overlay-mod", "totem-scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(1.5F)
-        .defaultValue(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final NumberOption<Float> HELD_ITEM_SCALE = NumberOption.<Float>number()
-        .node("overlay-mod", "held-item-scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(1.5F)
         .defaultValue(1.0F)
         .notifyClient()
         .build();
@@ -630,6 +606,32 @@ public final class ModOverlayMod {
         .comment("Disabling this allows you to hide armor slots for all entities.")
         .node("overlay-mod", "self-only").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final NumberOption<Float> TOTEM_SCALE = NumberOption.<Float>number()
+        .node("overlay-mod", "totem-scale").type(TypeToken.get(Float.class))
+        .min(0.25F).max(1.5F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final NumberOption<Float> HELD_ITEM_SCALE = NumberOption.<Float>number()
+        .node("overlay-mod", "held-item-scale").type(TypeToken.get(Float.class))
+        .min(0.25F).max(1.5F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 

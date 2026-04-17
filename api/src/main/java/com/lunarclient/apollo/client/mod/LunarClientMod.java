@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ public final class LunarClientMod {
      * @return the mod display name
      * @since 1.0.6
      */
-    String displayName;
+    @Nullable String displayName;
 
     /**
      * Returns the mod {@link String} version (e.g. '1.2.21').

@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,7 @@ import com.lunarclient.apollo.example.json.module.NickHiderJsonExample;
 import com.lunarclient.apollo.example.json.module.NotificationJsonExample;
 import com.lunarclient.apollo.example.json.module.PayNowJsonExample;
 import com.lunarclient.apollo.example.json.module.RichPresenceJsonExample;
+import com.lunarclient.apollo.example.json.module.ServerLinkJsonExample;
 import com.lunarclient.apollo.example.json.module.ServerRuleJsonExample;
 import com.lunarclient.apollo.example.json.module.StaffModJsonExample;
 import com.lunarclient.apollo.example.json.module.StopwatchJsonExample;
@@ -85,6 +86,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
         this.setNotificationExample(new NotificationJsonExample());
         this.setPayNowExample(new PayNowJsonExample());
         this.setRichPresenceExample(new RichPresenceJsonExample());
+        this.setServerLinkExample(new ServerLinkJsonExample());
         this.setServerRuleExample(new ServerRuleJsonExample());
         this.setStaffModExample(new StaffModJsonExample());
         this.setStopwatchExample(new StopwatchJsonExample());

@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,7 @@ public class ModSettingsCommand implements CommandExecutor {
 
         if (args.length != 1) {
             player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
+            player.sendMessage("Usage: /modsettings <requestInstalledMods>");
             return true;
         }
 
@@ -68,8 +69,15 @@ public class ModSettingsCommand implements CommandExecutor {
                 break;
             }
 
+            case "requestinstalledmods": {
+                modSettingsExample.requestInstalledModsExample(player);
+                player.sendMessage("Requesting installed mods.....");
+                break;
+            }
+
             default: {
                 player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
+                player.sendMessage("Usage: /modsettings <requestInstalledMods>");
                 break;
             }
         }

@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ public class ApolloPlayerProtoListener implements Listener {
 
     private final ApolloExamplePlugin plugin;
 
-    private final Set<UUID> playersRunningApollo = new HashSet<>();
+    private static final Set<UUID> PLAYERS_RUNNING_APOLLO = new HashSet<>();
 
     public ApolloPlayerProtoListener(ApolloExamplePlugin plugin) {
         this.plugin = plugin;
@@ -56,7 +56,7 @@ public class ApolloPlayerProtoListener implements Listener {
     }
 
     public void disable() {
-        this.playersRunningApollo.clear();
+        PLAYERS_RUNNING_APOLLO.clear();
 
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.unregisterOutgoingPluginChannel(this.plugin, "lunar:apollo");
@@ -77,7 +77,7 @@ public class ApolloPlayerProtoListener implements Listener {
         // Sending the player's world name to the client is required for some modules
         ProtobufPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
 
-        this.playersRunningApollo.add(player.getUniqueId());
+        PLAYERS_RUNNING_APOLLO.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");
     }
 
@@ -95,8 +95,8 @@ public class ApolloPlayerProtoListener implements Listener {
             .build();
     }
 
-    private boolean isPlayerRunningApollo(Player player) {
-        return this.playersRunningApollo.contains(player.getUniqueId());
+    public static boolean isPlayerRunningApollo(Player player) {
+        return PLAYERS_RUNNING_APOLLO.contains(player.getUniqueId());
     }
 
 }

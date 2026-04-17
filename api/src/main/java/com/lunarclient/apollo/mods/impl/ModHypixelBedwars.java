@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,6 +78,28 @@ public final class ModHypixelBedwars {
         .comment("Replaces normal hearts with hardcore hearts once your bed is lost")
         .node("hypixel-bedwars", "bw-hardcore-hearts").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.5
+     */
+    public static final SimpleOption<Boolean> BW_HIDE_FOOD_BAR = SimpleOption.<Boolean>builder()
+        .node("hypixel-bedwars", "bw-hide-food-bar").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.5
+     */
+    public static final SimpleOption<Boolean> BW_HIDE_ARMOR_BAR = SimpleOption.<Boolean>builder()
+        .node("hypixel-bedwars", "bw-hide-armor-bar").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

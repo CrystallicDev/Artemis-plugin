@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ public class NotificationJsonExample extends NotificationExample {
         ));
 
         message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
-        message.addProperty("resource_location", "icons/golden_apple.png");
+        message.addProperty("resource_location", "textures/items/apple_golden.png");
 
         JsonPacketUtil.sendPacket(viewer, message);
     }

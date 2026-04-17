@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -173,11 +173,12 @@ public final class ModChat {
         .build();
 
     /**
-     * No documentation available.
+     * Prevents your chat history from being cleared when disconnecting from or switching between servers.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> NO_CLOSE_MY_CHAT = SimpleOption.<Boolean>builder()
+        .comment("Prevents your chat history from being cleared when disconnecting from or switching between servers.")
         .node("chat", "no-close-my-chat").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()

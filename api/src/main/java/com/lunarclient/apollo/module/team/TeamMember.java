@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a team which can be shown on the client.
@@ -50,23 +51,25 @@ public final class TeamMember {
     /**
      * Returns the team member's {@link Component}.
      *
-     * <p>The display name is only used when the player
-     * is out of render distance for the observer and when the
-     * observer hovers over the marker.</p>
+     * <p>The display name is only shown when the player is outside
+     * the observer's render distance and when the observer hovers
+     * over the marker. If not provided, only the marker is displayed.</p>
      *
      * @return the team member's display name
      * @since 1.0.0
      */
-    Component displayName;
+    @Nullable Component displayName;
 
     /**
      * Returns the team member's assigned {@link Color} - this will be used
      * for any markers (such as on duration HUD, above head markers, etc).
      *
+     * <p>If not provided, the default color {@code 0xFFFFFFFF} is used.</p>
+     *
      * @return the team member's marker color
      * @since 1.0.0
      */
-    Color markerColor;
+    @Nullable Color markerColor;
 
     /**
      * Returns the team member's {@link ApolloLocation}.
@@ -78,6 +81,6 @@ public final class TeamMember {
      * @return the team member location
      * @since 1.0.0
      */
-    ApolloLocation location;
+    @Nullable ApolloLocation location;
 
 }

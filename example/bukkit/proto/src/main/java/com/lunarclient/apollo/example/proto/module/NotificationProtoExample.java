@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ public class NotificationProtoExample extends NotificationExample {
                     .append(Component.text("Good luck!", NamedTextColor.GOLD))
                 )
             )
-            .setResourceLocation("icons/golden_apple.png") // This field is optional
+            .setResourceLocation("textures/items/apple_golden.png") // This field is optional
             .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(5)))
             .build();
 

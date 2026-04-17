@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,6 +47,7 @@ import com.lunarclient.apollo.example.api.module.NickHiderApiExample;
 import com.lunarclient.apollo.example.api.module.NotificationApiExample;
 import com.lunarclient.apollo.example.api.module.PayNowApiExample;
 import com.lunarclient.apollo.example.api.module.RichPresenceApiExample;
+import com.lunarclient.apollo.example.api.module.ServerLinkApiExample;
 import com.lunarclient.apollo.example.api.module.ServerRuleApiExample;
 import com.lunarclient.apollo.example.api.module.StaffModApiExample;
 import com.lunarclient.apollo.example.api.module.StopwatchApiExample;
@@ -97,6 +98,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
         this.setNotificationExample(new NotificationApiExample());
         this.setPayNowExample(new PayNowApiExample());
         this.setRichPresenceExample(new RichPresenceApiExample());
+        this.setServerLinkExample(new ServerLinkApiExample());
         this.setServerRuleExample(new ServerRuleApiExample());
         this.setStaffModExample(new StaffModApiExample());
         this.setStopwatchExample(new StopwatchApiExample());

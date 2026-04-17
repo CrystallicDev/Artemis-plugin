@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +58,8 @@ import com.lunarclient.apollo.module.paynow.PayNowModule;
 import com.lunarclient.apollo.module.paynow.PayNowModuleImpl;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
+import com.lunarclient.apollo.module.serverlink.ServerLinkModule;
+import com.lunarclient.apollo.module.serverlink.ServerLinkModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -105,7 +107,7 @@ import lombok.Getter;
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
-    version = "1.2.4",
+    version = "1.2.5",
     url = "https://moonsworth.com",
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
@@ -196,6 +198,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(PayNowModule.class, new PayNowModuleImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
+            .addModule(ServerLinkModule.class, new ServerLinkModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())

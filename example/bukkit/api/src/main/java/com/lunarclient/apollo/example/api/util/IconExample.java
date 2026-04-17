@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.api.util;
 
 import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.common.icon.ResourceLocationIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import org.bukkit.Material;
 
@@ -39,6 +40,12 @@ public final class IconExample {
     public static ItemStackIcon itemStackNameIconExample() {
         return ItemStackIcon.builder()
             .itemName("ENDER_PEARL")
+            .build();
+    }
+
+    public static ResourceLocationIcon resourceLocationExample() {
+        return ResourceLocationIcon.builder()
+            .resourceLocation("minecraft:textures/item/apple.png") // Resource path location
             .build();
     }
 

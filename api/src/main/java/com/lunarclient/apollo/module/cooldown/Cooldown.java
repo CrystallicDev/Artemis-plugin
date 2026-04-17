@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ import com.lunarclient.apollo.common.icon.Icon;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a cooldown which can be shown on the client.
@@ -63,5 +64,15 @@ public final class Cooldown {
      * @since 1.0.0
      */
     Icon icon;
+
+    /**
+     * Returns the cooldown {@link CooldownStyle}.
+     *
+     * <p>If {@code null}, the style defaults to the user's local Cooldown Mod settings.</p>
+     *
+     * @return the cooldown style
+     * @since 1.2.5
+     */
+    @Nullable CooldownStyle style;
 
 }

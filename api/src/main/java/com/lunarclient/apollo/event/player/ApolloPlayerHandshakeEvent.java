@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -69,9 +70,10 @@ public class ApolloPlayerHandshakeEvent implements Event {
      * A {@link List} of {@link LunarClientMod} the player has installed.
      *
      * @return the installed mods
+     * @deprecated for removal since 1.2.5, use {@link ModSettingModule#requestInstalledMods(ApolloPlayer)} instead.
      * @since 1.0.6
      */
-    List<LunarClientMod> installedMods;
+    @Deprecated List<LunarClientMod> installedMods;
 
     /**
      * The {@link TebexEmbeddedCheckoutSupport} type.

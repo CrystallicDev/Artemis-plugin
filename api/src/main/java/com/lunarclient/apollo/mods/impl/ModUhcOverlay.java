@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Resize items that are commonly needed in UHC to make spotting them easier.
+ * No documentation available.
  *
  * @since 1.0.0
  */
+@Deprecated
 public final class ModUhcOverlay {
 
     /**
@@ -39,6 +40,7 @@ public final class ModUhcOverlay {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("uhc-overlay", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
