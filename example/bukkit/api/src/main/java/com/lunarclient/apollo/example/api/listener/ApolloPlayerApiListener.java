@@ -30,8 +30,12 @@ import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.api.module.TeamApiExample;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
+import com.lunarclient.apollo.example.module.impl.CosmeticExample;
 import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
+import com.lunarclient.apollo.example.nms.NpcManager;
+import com.lunarclient.apollo.example.nms.PlayerNpc;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Optional;
 import org.bukkit.entity.Player;
 
 public class ApolloPlayerApiListener implements ApolloListener {
@@ -60,17 +64,23 @@ public class ApolloPlayerApiListener implements ApolloListener {
 
         this.example.getBeamExample().displayBeamExample(player);
         this.example.getBorderExample().displayBorderExample(player);
-        this.example.getNametagExample().overrideNametagExample(player);
         this.example.getWaypointExample().displayWaypointExample(player);
 
         CooldownExample cooldownExample = this.example.getCooldownExample();
         cooldownExample.displayCooldownItemExample(player);
         cooldownExample.displayCooldownWithStyleExample(player);
+        cooldownExample.displayCooldownWithPlayerTextureExample(player);
         cooldownExample.displayCooldownResourceExample(player);
 
         ServerLinkExample serverLinkExample = this.example.getServerLinkExample();
         serverLinkExample.overrideServerLinkResourceExample(player);
         serverLinkExample.addServerLinkExample(player);
+
+        CosmeticExample cosmeticExample = this.example.getCosmeticExample();
+        NpcManager npcManager = this.example.getNpcManager();
+
+        Optional<PlayerNpc> npc = npcManager.findByName("Apollo");
+        npc.ifPresent(playerNpc -> cosmeticExample.equipNpcCosmeticsExample(player, playerNpc.getUuid()));
     }
 
 }

@@ -23,8 +23,10 @@
  */
 package com.lunarclient.apollo.common.icon;
 
+import com.lunarclient.apollo.common.profile.Profile;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents an item stack icon.
@@ -58,5 +60,13 @@ public final class ItemStackIcon extends Icon {
      * @since 1.0.7
      */
     int customModelData;
+
+    /**
+     * Returns the icon {@link Profile}.
+     *
+     * @return the icon profile
+     * @since 1.2.6
+     */
+    @Nullable Profile profile;
 
 }

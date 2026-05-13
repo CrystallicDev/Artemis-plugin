@@ -1,12 +1,14 @@
 name: Apollo-API-Example
 main: com.lunarclient.apollo.example.api.ApolloApiExamplePlatform
-version: 1.2.5
+version: 1.2.6
 author: Moonsworth
 softdepend: [ Apollo-Bukkit, Apollo-Folia ]
 api-version: 1.13
 folia-supported: true
 
 commands:
+    npc:
+        description: "NPCs!"
     apollodebug:
         description: "Apollo Debug!"
     modstatus:
@@ -25,6 +27,8 @@ commands:
         description: "Combat!"
     cooldown:
         description: "Cooldowns!"
+    cosmetic:
+        description: "Cosmetics!"
     entity:
         description: "Entity!"
     glint:
