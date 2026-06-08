@@ -21,19 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.example.util;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+public final class CommandUtil {
 
-public abstract class WaypointExample extends ApolloModuleExample {
+    public static boolean parseBoolean(String value, boolean fallback) {
+        return value != null ? Boolean.parseBoolean(value) : fallback;
+    }
 
-    public abstract void displayWaypointExample(Player viewer);
+    public static float parseFloat(String value, float fallback) {
+        if (value == null) {
+            return fallback;
+        }
 
-    public abstract void displayWaypointWithTextStyle(Player viewer);
+        try {
+            return Float.parseFloat(value);
+        } catch (NumberFormatException ex) {
+            return fallback;
+        }
+    }
 
-    public abstract void removeWaypointExample(Player viewer);
-
-    public abstract void resetWaypointsExample(Player viewer);
+    private CommandUtil() {
+    }
 
 }

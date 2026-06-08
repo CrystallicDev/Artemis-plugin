@@ -24,6 +24,8 @@
 package com.lunarclient.apollo.example.module.impl;
 
 import com.lunarclient.apollo.example.module.ApolloModuleExample;
+import com.lunarclient.apollo.example.nms.CommandCosmetic;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.bukkit.entity.Player;
@@ -32,13 +34,31 @@ public abstract class CosmeticExample extends ApolloModuleExample {
 
     public abstract void equipNpcCosmeticsExample(Player viewer, UUID npcUuid);
 
+    public abstract void equipNpcCosmeticsCopyLocalExample(Player viewer, UUID npcUuid);
+
     public abstract void equipNpcCosmeticsInternal(Player viewer, UUID npcUuid, List<Integer> cosmeticIds);
+
+    public void equipNpcCosmeticInternal(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
+        this.equipNpcCosmeticsInternal(viewer, npcUuid, Collections.singletonList(cosmetic.getId()));
+    }
+
+    public void equipNpcCosmeticToViewer(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
+        this.equipNpcCosmeticInternal(viewer, npcUuid, cosmetic);
+    }
 
     public abstract void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid);
 
     public abstract void unequipNpcCosmeticsInternal(Player viewer, UUID npcUuid, List<Integer> cosmeticIds);
 
     public abstract void resetNpcCosmeticsExample(Player viewer, UUID npcUuid);
+
+    public abstract void startNpcEmoteExample(Player viewer, UUID npcUuid);
+
+    public abstract void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata);
+
+    public abstract void stopNpcEmoteExample(Player viewer, UUID npcUuid);
+
+    public abstract void resetNpcEmotesExample();
 
     public abstract void displaySprayExample(Player viewer, int sprayId);
 

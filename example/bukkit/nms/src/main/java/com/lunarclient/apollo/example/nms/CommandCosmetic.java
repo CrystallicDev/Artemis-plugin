@@ -21,19 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.example.nms;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+import lombok.Builder;
+import lombok.Getter;
 
-public abstract class WaypointExample extends ApolloModuleExample {
+@Getter
+@Builder
+public final class CommandCosmetic {
 
-    public abstract void displayWaypointExample(Player viewer);
+    int id;
+    Options options;
 
-    public abstract void displayWaypointWithTextStyle(Player viewer);
+    public abstract static class Options {
+    }
 
-    public abstract void removeWaypointExample(Player viewer);
+    @Getter
+    @Builder
+    public static final class Hat extends Options {
+        @Builder.Default boolean showOverHelmet = true;
+        @Builder.Default boolean showOverSkinLayer = true;
+        @Builder.Default float heightOffset = 0f;
+    }
 
-    public abstract void resetWaypointsExample(Player viewer);
+    @Getter
+    @Builder
+    public static final class Cloak extends Options {
+        @Builder.Default boolean useClothPhysics = false;
+    }
+
+    @Getter
+    @Builder
+    public static final class Pet extends Options {
+        @Builder.Default boolean flipShoulder = false;
+    }
+
+    @Getter
+    @Builder
+    public static final class Body extends Options {
+        @Builder.Default boolean showOverChestplate = true;
+        @Builder.Default boolean showOverLeggings = true;
+        @Builder.Default boolean showOverBoots = true;
+    }
 
 }

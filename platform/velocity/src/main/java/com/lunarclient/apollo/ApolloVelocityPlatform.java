@@ -94,6 +94,7 @@ import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.ChannelRegistrar;
+import com.velocitypowered.api.proxy.messages.LegacyChannelIdentifier;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ import lombok.Getter;
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
-    version = "1.2.6",
+    version = "1.2.7",
     url = "https://moonsworth.com",
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
@@ -118,6 +119,7 @@ import lombok.Getter;
 public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     public static MinecraftChannelIdentifier PLUGIN_CHANNEL;
+    public static LegacyChannelIdentifier LEGACY_PLUGIN_CHANNEL;
 
     @Getter private static ApolloVelocityPlatform instance;
 
@@ -227,6 +229,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
         ChannelRegistrar channelRegistrar = this.server.getChannelRegistrar();
         channelRegistrar.register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+        channelRegistrar.register(ApolloVelocityPlatform.LEGACY_PLUGIN_CHANNEL);
         channelRegistrar.register(ApolloMetadataListener.FML_HANDSHAKE_CHANNEL);
 
         CommandManager commandManager = this.server.getCommandManager();
@@ -250,6 +253,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     static {
         PLUGIN_CHANNEL = MinecraftChannelIdentifier.create("lunar", "apollo");
+        LEGACY_PLUGIN_CHANNEL = new LegacyChannelIdentifier(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
 
 }

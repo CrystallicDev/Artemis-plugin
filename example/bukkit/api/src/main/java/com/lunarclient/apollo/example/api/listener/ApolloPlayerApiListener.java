@@ -32,10 +32,10 @@ import com.lunarclient.apollo.example.api.module.TeamApiExample;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
 import com.lunarclient.apollo.example.module.impl.CosmeticExample;
 import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
+import com.lunarclient.apollo.example.nms.CommandCosmetic;
 import com.lunarclient.apollo.example.nms.NpcManager;
 import com.lunarclient.apollo.example.nms.PlayerNpc;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Optional;
 import org.bukkit.entity.Player;
 
 public class ApolloPlayerApiListener implements ApolloListener {
@@ -64,7 +64,6 @@ public class ApolloPlayerApiListener implements ApolloListener {
 
         this.example.getBeamExample().displayBeamExample(player);
         this.example.getBorderExample().displayBorderExample(player);
-        this.example.getWaypointExample().displayWaypointExample(player);
 
         CooldownExample cooldownExample = this.example.getCooldownExample();
         cooldownExample.displayCooldownItemExample(player);
@@ -79,8 +78,11 @@ public class ApolloPlayerApiListener implements ApolloListener {
         CosmeticExample cosmeticExample = this.example.getCosmeticExample();
         NpcManager npcManager = this.example.getNpcManager();
 
-        Optional<PlayerNpc> npc = npcManager.findByName("Apollo");
-        npc.ifPresent(playerNpc -> cosmeticExample.equipNpcCosmeticsExample(player, playerNpc.getUuid()));
+        for (PlayerNpc npc : npcManager.getNpcs()) {
+            for (CommandCosmetic spec : npc.getCosmetics()) {
+                cosmeticExample.equipNpcCosmeticToViewer(player, npc.getUuid(), spec);
+            }
+        }
     }
 
 }

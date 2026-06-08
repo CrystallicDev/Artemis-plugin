@@ -21,19 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.module.cosmetic;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+import lombok.Builder;
+import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
-public abstract class WaypointExample extends ApolloModuleExample {
+/**
+ * Represents an emote that can be played on an NPC.
+ *
+ * @since 1.2.7
+ */
+@Getter
+@Builder
+public final class Emote {
 
-    public abstract void displayWaypointExample(Player viewer);
+    /**
+     * Returns the Lunar Client emote id.
+     *
+     * <p>The value must be greater than 0.</p>
+     *
+     * @return the emote id
+     * @since 1.2.7
+     */
+    @Range(from = 1, to = Integer.MAX_VALUE) int id;
 
-    public abstract void displayWaypointWithTextStyle(Player viewer);
-
-    public abstract void removeWaypointExample(Player viewer);
-
-    public abstract void resetWaypointsExample(Player viewer);
+    /**
+     * Returns the metadata used to select a variant for emotes that support one.
+     *
+     * <p>The value is ignored by emotes that do not use it. For example, a coin flip emote may use
+     * {@code 1} for heads and {@code 2} for tails, while a rock paper scissors emote may use {@code 1}
+     * for rock, {@code 2} for paper, and {@code 3} for scissors.</p>
+     *
+     * @return the emote metadata
+     * @since 1.2.7
+     */
+    int metadata;
 
 }

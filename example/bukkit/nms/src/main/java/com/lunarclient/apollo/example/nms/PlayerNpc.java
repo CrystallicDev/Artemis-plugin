@@ -23,9 +23,12 @@
  */
 package com.lunarclient.apollo.example.nms;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Location;
 
@@ -37,6 +40,9 @@ public final class PlayerNpc {
     private final String name;
     private final Location location;
     private final ServerPlayer handle;
+
+    @Setter
+    private List<CommandCosmetic> cosmetics = new ArrayList<>();
 
     public int getEntityId() {
         return this.handle.getId();
