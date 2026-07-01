@@ -38,4 +38,8 @@ public abstract class ServerLinkExample extends ApolloModuleExample {
 
     public abstract void resetServerLinksExample(Player viewer);
 
+    public abstract void setLegacyButtonPlacementExample(String placement);
+
+    public abstract void setModernButtonPlacementExample(String placement);
+
 }

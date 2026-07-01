@@ -41,8 +41,8 @@ import org.jetbrains.annotations.NotNull;
 public final class JsonPacketUtil {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
-        "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
-        "rich_presence", "saturation", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+        "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "marker", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
+        "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
     );
 
     // Module Id -> Option key -> Object
@@ -53,11 +53,15 @@ public final class JsonPacketUtil {
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
         CONFIG_MODULE_PROPERTIES.put("colored_fire", "persist-colors-on-unload", false);
         CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", false);
+        CONFIG_MODULE_PROPERTIES.put("combat", "disable-block-miss-penalty", false);
+        CONFIG_MODULE_PROPERTIES.put("combat", "allow-dig-and-use", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-open.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-close.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item-bucket.send-packet", false);
+        CONFIG_MODULE_PROPERTIES.put("server_link", "legacy-button-placement", "NEW_ROW");
+        CONFIG_MODULE_PROPERTIES.put("server_link", "modern-button-placement", "REPLACE_REPORT_BUGS");
         CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", false);
         CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Arrays.asList("/server", "/servers", "/hub"));
         CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-shaders", false);

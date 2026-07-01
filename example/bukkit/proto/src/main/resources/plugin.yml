@@ -1,6 +1,6 @@
 name: Apollo-Proto-Example
 main: com.lunarclient.apollo.example.proto.ApolloProtoExamplePlatform
-version: 1.2.7
+version: 1.2.8
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -38,6 +38,8 @@ commands:
         description: "Inventory!"
     limb:
         description: "Limb!"
+    marker:
+        description: "Markers!"
     modsettings:
         description: "ModSettings!"
     nametag:

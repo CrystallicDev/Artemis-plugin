@@ -42,8 +42,8 @@ import org.bukkit.entity.Player;
 public final class ProtobufPacketUtil {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
-        "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
-        "rich_presence", "saturation", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+        "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "marker", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
+        "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
     );
 
     // Module Id -> Option key -> Value
@@ -54,11 +54,15 @@ public final class ProtobufPacketUtil {
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
         CONFIG_MODULE_PROPERTIES.put("colored_fire", "persist-colors-on-unload", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("combat", "disable-block-miss-penalty", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("combat", "allow-dig-and-use", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-open.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-close.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item-bucket.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_link", "legacy-button-placement", Value.newBuilder().setStringValue("NEW_ROW").build());
+        CONFIG_MODULE_PROPERTIES.put("server_link", "modern-button-placement", Value.newBuilder().setStringValue("REPLACE_REPORT_BUGS").build());
         CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Value.newBuilder().setListValue(
             ListValue.newBuilder().addAllValues(Arrays.asList(
