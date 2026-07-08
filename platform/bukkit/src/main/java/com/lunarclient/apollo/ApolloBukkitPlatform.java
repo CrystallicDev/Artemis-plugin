@@ -188,6 +188,9 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
 
+        // Artemis client bridge (hex chat).
+        Apollo.setArtemis(new com.lunarclient.apollo.artemis.ArtemisImpl(this.plugin));
+
         this.plugin.getCommand("apollo").setExecutor(new BukkitApolloCommand());
         this.plugin.getCommand("lunarclient").setExecutor(new BukkitLunarClientCommand());
 

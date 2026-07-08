@@ -40,6 +40,7 @@ public final class Apollo {
     private static ApolloModuleManager moduleManager = null;
     private static ApolloWorldManager worldManager = null;
     private static ApolloPlayerManager playerManager = null;
+    private static com.lunarclient.apollo.artemis.Artemis artemis = null;
 
     /**
      * Returns the {@link ApolloPlatform}.
@@ -79,6 +80,27 @@ public final class Apollo {
      */
     public static ApolloPlayerManager getPlayerManager() {
         return Apollo.checkEnabled(Apollo.playerManager);
+    }
+
+    /**
+     * Returns the {@link com.lunarclient.apollo.artemis.Artemis} bridge.
+     *
+     * @return the Artemis bridge
+     * @since 1.2.8
+     */
+    public static com.lunarclient.apollo.artemis.Artemis getArtemis() {
+        return Apollo.checkEnabled(Apollo.artemis);
+    }
+
+    /**
+     * Installs the {@link com.lunarclient.apollo.artemis.Artemis} bridge.
+     * Called once by the platform during startup.
+     *
+     * @param artemis the bridge implementation
+     * @since 1.2.8
+     */
+    public static void setArtemis(com.lunarclient.apollo.artemis.Artemis artemis) {
+        Apollo.artemis = artemis;
     }
 
     static void initialize(@NonNull ApolloPlatform platform, @NonNull ApolloModuleManager moduleManager,
