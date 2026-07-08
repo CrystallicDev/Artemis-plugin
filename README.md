@@ -5,7 +5,6 @@
 # Artemis Plugin
 
 [![Forge](https://img.shields.io/badge/Server-Bukkit-yellow)](https://getbukkit.org)
-[![Modrinth](https://img.shields.io/modrinth/dt/lunar-artemis)](https://modrinth.com/mod/lunar-artemis)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nqtsu91)
 
