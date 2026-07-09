@@ -17,8 +17,6 @@
 
 <div align="center">
 
-# Artemis
-
 **A fork of [Apollo](https://github.com/LunarClient/Apollo) that adds a server-side bridge to
 [Artemis](https://modrinth.com/mod/lunar-artemis), an in-house Forge 1.8.9 client that renders true
 hex colors where the vanilla 1.8 protocol cannot.**
