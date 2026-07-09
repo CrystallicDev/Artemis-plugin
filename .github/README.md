@@ -1,87 +1,156 @@
-![](https://i.imgur.com/VdgyD5m.png)
-# Apollo
-[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://lunarclient.dev/discord)
-[![Latest Release](https://img.shields.io/github/v/release/LunarClient/Apollo.svg)](https://github.com/LunarClient/Apollo/releases)
-[![License](https://img.shields.io/github/license/LunarClient/Apollo.svg)](https://github.com/LunarClient/Apollo/blob/master/license.txt)
+<div align="center">
 
-Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
+![logo](https://cdn.modrinth.com/data/cached_images/c2c98103a149620c1ab5b08e4e87512bfe3af0cd_0.webp)
 
-**Resources**
-- [Documentation & Wiki](https://lunarclient.dev/apollo/introduction)
-- [Downloads](https://lunarclient.dev/apollo/downloads)
-- [Maven Repository](https://lunarclient.dev/maven-repository)
+# Artemis Plugin
 
-## Integration
+[![Forge](https://img.shields.io/badge/Platform-Folia-darkgreen)](https://papermc.io/software/folia/)
+[![Forge](https://img.shields.io/badge/Platform-Bukkit-yellow)](https://dev.bukkit.org)
+[![Forge](https://img.shields.io/badge/Platform-Minestom-pink)](https://minestom.net)
+[![Forge](https://img.shields.io/badge/Platform-BungeeCord-orange)](https://github.com/SpigotMC/BungeeCord)
+[![Forge](https://img.shields.io/badge/Platform-Velocity-green)](https://papermc.io/software/velocity/)
+[![Modrinth](https://img.shields.io/modrinth/dt/artemis-plugin)](https://modrinth.com/mod/artemis-plugin)
 
-### API Integration
-Use the **Apollo API** directly by depending on it from our [Maven repository](https://lunarclient.dev/maven-repository).  
-This is the most straightforward way to create plugins and modules that communicate with Lunar Client.
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nqtsu91)
 
-See the [Waypoint module integration guide](https://lunarclient.dev/apollo/developers/modules/waypoint#integration) for a complete example.
+</div>
 
-### Lightweight Integration
-Our **Lightweight integration** allows you to use Apollo features **without running the Apollo plugin**.  
-This is useful for developers who want Apollo functionality but prefer a more minimal approach.
+<div align="center">
 
-There are two supported methods:
-- [Lightweight JSON](https://lunarclient.dev/apollo/developers/lightweight/json)
-- [Lightweight Protobuf](https://lunarclient.dev/apollo/developers/lightweight/protobuf)
+# Artemis
 
-Both approaches achieve the same goal, but with different trade-offs in terms of **complexity and flexibility**.  
+**A fork of [Apollo](https://github.com/LunarClient/Apollo) that adds a server-side bridge to
+[Artemis](https://modrinth.com/mod/lunar-artemis), an in-house Forge 1.8.9 client that renders true
+hex colors where the vanilla 1.8 protocol cannot.**
 
-Read the [Lightweight introduction](https://lunarclient.dev/apollo/developers/lightweight) documentation to get started.
+</div>
 
-## Examples
+> This is a fork, not a replacement. Every standard Apollo module works unchanged. This repository
+> only **adds** the Artemis bridge described below. For anything else, use the
+> [Apollo documentation](https://lunarclient.dev/apollo/developers).
 
-Apollo includes example plugins to help you get started quickly.  
-These are the **same projects used for the code examples in the official documentation** on [lunarclient.dev](https://lunarclient.dev/apollo/introduction/).
+---
 
-Each module page on the documentation site shows how to use **API**, **Lightweight JSON**, and **Lightweight Protobuf** integrations, with code pulled directly from these projects.
+## What this is
 
-### Bukkit
-- API example → `example/bukkit/api/build/libs`
-- Lightweight JSON example → `example/bukkit/json/build/libs`
-- Lightweight Protobuf example → `example/bukkit/protos/build/libs`
+- **[Apollo](https://github.com/LunarClient/Apollo)** is Lunar Client's official server API.
+- **[Artemis](https://modrinth.com/mod/lunar-artemis)** is a Forge 1.8.9 mod that answers the Apollo
+  protocol like a Lunar client, and additionally renders **24-bit hex colors** in spots where 1.8.9
+  normally falls back to 16 colors, most importantly, **chat**.
 
-### Minestom
-- API example server → `example/minestom/api/build/libs`
+This fork adds the **server side** of that: a small, official-feeling API to **detect** Artemis
+clients and to push **hex-colored chat** to them, with everything about the channel and wire format
+hidden behind a clean interface.
 
-## Building
+---
 
-Apollo uses [Gradle](https://gradle.org/) to handle dependencies and compile the project.
+## The Artemis bridge
 
-**Prerequisites**
+Access it through Apollo, like any other part of the API:
 
-- Java 8 JDK
-- Build Tools for Spigot 1.8.8
+```java
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.artemis.Artemis;
 
-**Compiling**
-
-Running the following will compile the Apollo source for Java 8.
-
-```shell
-./gradlew build
+Artemis artemis = Apollo.getArtemis();
 ```
 
-The compiled jars will be available in build/libs for each platform:
+> Available on the **Bukkit** platform (it is installed automatically when Apollo enables). On other
+> platforms `getArtemis()` returns `null`.
 
-- Bukkit: `platform/bukkit/plugin/build/libs`
-- Folia: `platform/folia/build/libs`
-- Minestom: `platform/minestom/build/libs`
-- BungeeCord: `platform/bungee/build/libs`
-- Velocity: `platform/velocity/build/libs`
+### Detecting Artemis clients
 
-## Contributing
+A client counts as Artemis once it has registered the bridge's plugin-message channel.
 
-The Apollo project is split into several modules.
+```java
+if (artemis.isArtemis(player.getUniqueId())) {
+    // safe to send hex chat to this player
+}
+```
 
-- **API** - The publicly available interface for developers wishing to create custom integrations with Lunar Client.
-- **Common** - The abstraction used by platform modules to reduce duplicate code and implement the protocol for Lunar Client.
-- **Bukkit, Folia, Minestom, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
+This lets you branch your own fallback: send hex through the bridge to Artemis players, and a normal
+(down-sampled) message to everyone else.
 
-Contributions can be made to Apollo by creating a pull request for improvements or fixes. For new feature ideas please consider making a 
-suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://lunarclient.dev/discord).
+### Hex-colored chat
+
+`chat(...)` takes **legacy-formatted** text, where hex is written in the `§x§r§r§g§g§b§b` form (plain
+`§` color/format codes work too). The bridge serializes it and displays it in the client's **vanilla
+chat** (native scroll / fade / removal). It returns a **message id** you can use to update or remove
+the line later.
+
+```java
+UUID id = player.getUniqueId();
+
+// Display a hex-colored line. Returns a message id, or -1 if the player is not an Artemis client.
+int msgId = artemis.chat(id, "§x§2§2§9§9§f§fHello §x§2§2§d§d§6§6world!");
+
+// Re-send with the SAME id to replace it (live update), or remove it entirely:
+artemis.removeChat(id, msgId);
+
+// Clear the whole Artemis chat of the player:
+artemis.clearChat(id);
+```
+
+Producing the legacy hex string from an Adventure component:
+
+```java
+LegacyComponentSerializer legacy = LegacyComponentSerializer.builder()
+    .character('§')
+    .hexColors()
+    .build();
+
+artemis.chat(id, legacy.serialize(component));
+```
+
+All bridge methods are **no-ops for non-Artemis players** (`chat` returns `-1`), so it is always safe
+to call them.
+
+---
+
+## API reference
+
+`com.lunarclient.apollo.artemis.Artemis` — obtained via `Apollo.getArtemis()`.
+
+| Method | Description |
+|--------|-------------|
+| `boolean isArtemis(UUID playerId)` | Whether the player is running Artemis (its channel is registered) |
+| `int chat(UUID playerId, String legacyText)` | Display a hex chat line; returns a message id, or `-1` if not an Artemis client |
+| `void removeChat(UUID playerId, int messageId)` | Remove a previously displayed message |
+| `void clearChat(UUID playerId)` | Clear the player's Artemis chat |
+
+---
+
+## Under the hood
+
+- **Channel:** `artemis:chat` (registered outgoing on startup). A client that registers this channel
+  is marked as Artemis; unregistering removes the mark.
+- **Payload** (`DataOutputStream`): `byte opcode` — `0` display (`int id`, `UTF json`), `1` remove
+  (`int id`), `2` clear. The JSON is the Adventure Gson form; `§x§r§r§g§g§b§b` hex is preserved.
+
+You never touch any of this directly, it is fully encapsulated by the `Artemis` interface.
+
+---
+
+## Scope
+
+This fork's addition is intentionally small: **Artemis detection and hex chat only.**
+
+Artemis also renders hex in other surfaces (tab list, scoreboard, team prefixes, nametags, titles),
+but those are driven **directly by your plugin** (by putting the `§x…` sequence in the relevant
+vanilla string and sending it only to Artemis/Lunar clients) — see the
+[Artemis documentation](https://modrinth.com/mod/lunar-artemis). They are not part of this API.
+
+## Usage 
+
+Use it exactly like Apollo; `Apollo.getArtemis()` is available once Apollo is enabled.
+
+## Relationship to Apollo and Artemis
+
+- **Apollo (upstream):** all standard modules are present and unmodified. Non-bridge contributions
+  belong upstream at [LunarClient/Apollo](https://github.com/LunarClient/Apollo).
+- **Artemis (client):** the client-side counterpart. Without Artemis on the client, `isArtemis`
+  returns `false` and the bridge methods do nothing.
 
 ## License
 
-Apollo is licensed under the [MIT license](https://github.com/LunarClient/Apollo/blob/master/license.txt).
+Inherits Apollo's MIT license. See [`LICENSE`](LICENSE).
