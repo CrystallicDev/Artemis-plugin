@@ -81,4 +81,32 @@ public interface Artemis {
      * @since 1.2.8
      */
     void clearChat(UUID playerId);
+
+    /**
+     * Strikes a colored lightning bolt at a location on the player's Artemis client.
+     *
+     * <p>Purely visual: no entity is spawned and no damage is dealt. Colors are ARGB ints and their
+     * alpha is ignored. No-op for non-Artemis clients.</p>
+     *
+     * @param playerId  the recipient uuid
+     * @param x         the world x coordinate
+     * @param y         the world y coordinate
+     * @param z         the world z coordinate
+     * @param mainColor the outer glow color, as an ARGB int
+     * @param coreColor the inner core color, as an ARGB int
+     * @since 1.2.8
+     */
+    void strikeLightning(UUID playerId, double x, double y, double z, int mainColor, int coreColor);
+
+    /**
+     * Strikes a colored lightning bolt using a single color; a brighter core is derived from it.
+     *
+     * @param playerId the recipient uuid
+     * @param x        the world x coordinate
+     * @param y        the world y coordinate
+     * @param z        the world z coordinate
+     * @param color    the lightning color, as an ARGB int
+     * @since 1.2.8
+     */
+    void strikeLightning(UUID playerId, double x, double y, double z, int color);
 }

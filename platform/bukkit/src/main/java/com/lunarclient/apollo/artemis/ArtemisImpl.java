@@ -45,14 +45,18 @@ import org.bukkit.plugin.messaging.Messenger;
 /**
  * Bukkit implementation of the {@link Artemis} bridge.
  *
- * <p>Handles the server side of the link: the {@value #CHANNEL} plugin-message
- * channel (registered on startup), tracking which clients are Artemis (a client
- * counts once it registers that channel), and the chat wire protocol. Callers
- * only touch {@link Artemis}, never the channel or payload format.</p>
+ * <p>Handles the server side of the link: the Artemis plugin-message channels
+ * ({@value #CHANNEL}, {@value #LIGHTNING_CHANNEL}), registered on startup, tracking
+ * which clients are Artemis (a client counts once it registers the chat channel),
+ * and the wire protocols. Callers only touch {@link Artemis}, never the channels
+ * or payload formats.</p>
  *
- * <p>Payload: a {@code byte} opcode, then {@code 0} display ({@code int id},
+ * <p>Chat payload: a {@code byte} opcode, then {@code 0} display ({@code int id},
  * {@code UTF json}), {@code 1} remove ({@code int id}) or {@code 2} clear. The
  * JSON is Adventure's gson form; {@code §x§r§r§g§g§b§b} hex is kept.</p>
+ *
+ * <p>Lightning payload: {@code double x}, {@code double y}, {@code double z}, then
+ * {@code int mainColor} and {@code int coreColor} (ARGB).</p>
  *
  * @since 1.2.8
  */
@@ -64,6 +68,13 @@ public final class ArtemisImpl implements Artemis, Listener {
      * @since 1.2.8
      */
     public static final String CHANNEL = "artemis:chat";
+
+    /**
+     * The colored-lightning channel, registered by Artemis clients alongside {@link #CHANNEL}.
+     *
+     * @since 1.2.8
+     */
+    public static final String LIGHTNING_CHANNEL = "artemis:lightning";
 
     private static final int OP_DISPLAY = 0;
     private static final int OP_REMOVE = 1;
@@ -91,6 +102,9 @@ public final class ArtemisImpl implements Artemis, Listener {
         Messenger messenger = plugin.getServer().getMessenger();
         if (!messenger.isOutgoingChannelRegistered(plugin, CHANNEL)) {
             messenger.registerOutgoingPluginChannel(plugin, CHANNEL);
+        }
+        if (!messenger.isOutgoingChannelRegistered(plugin, LIGHTNING_CHANNEL)) {
+            messenger.registerOutgoingPluginChannel(plugin, LIGHTNING_CHANNEL);
         }
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -140,7 +154,7 @@ public final class ArtemisImpl implements Artemis, Listener {
         int id = this.nextId.getAndIncrement();
         Component component = LEGACY.deserialize(legacyText);
         String json = GsonComponentSerializer.gson().serialize(component);
-        this.send(player, out -> {
+        this.send(player, CHANNEL, out -> {
             out.writeByte(OP_DISPLAY);
             out.writeInt(id);
             out.writeUTF(json);
@@ -154,7 +168,7 @@ public final class ArtemisImpl implements Artemis, Listener {
         if (player == null || !this.isArtemis(playerId)) {
             return;
         }
-        this.send(player, out -> {
+        this.send(player, CHANNEL, out -> {
             out.writeByte(OP_REMOVE);
             out.writeInt(messageId);
         });
@@ -166,7 +180,38 @@ public final class ArtemisImpl implements Artemis, Listener {
         if (player == null || !this.isArtemis(playerId)) {
             return;
         }
-        this.send(player, out -> out.writeByte(OP_CLEAR));
+        this.send(player, CHANNEL, out -> out.writeByte(OP_CLEAR));
+    }
+
+    @Override
+    public void strikeLightning(UUID playerId, double x, double y, double z, int mainColor, int coreColor) {
+        Player player = playerId != null ? Bukkit.getPlayer(playerId) : null;
+        if (player == null || !this.isArtemis(playerId)) {
+            return;
+        }
+        this.send(player, LIGHTNING_CHANNEL, out -> {
+            out.writeDouble(x);
+            out.writeDouble(y);
+            out.writeDouble(z);
+            out.writeInt(mainColor);
+            out.writeInt(coreColor);
+        });
+    }
+
+    @Override
+    public void strikeLightning(UUID playerId, double x, double y, double z, int color) {
+        this.strikeLightning(playerId, x, y, z, color, brightCore(color));
+    }
+
+    // Derives a brighter core color by moving each RGB channel halfway to white.
+    private static int brightCore(int color) {
+        int red = (color >> 16) & 0xFF;
+        int green = (color >> 8) & 0xFF;
+        int blue = color & 0xFF;
+        red += (0xFF - red) / 2;
+        green += (0xFF - green) / 2;
+        blue += (0xFF - blue) / 2;
+        return 0xFF000000 | (red << 16) | (green << 8) | blue;
     }
 
     private interface PayloadWriter {
@@ -175,13 +220,13 @@ public final class ArtemisImpl implements Artemis, Listener {
 
     }
 
-    private void send(Player player, PayloadWriter writer) {
+    private void send(Player player, String channel, PayloadWriter writer) {
         try {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             try (DataOutputStream out = new DataOutputStream(bytes)) {
                 writer.write(out);
             }
-            player.sendPluginMessage(this.plugin, CHANNEL, bytes.toByteArray());
+            player.sendPluginMessage(this.plugin, channel, bytes.toByteArray());
         } catch (Exception ex) {
             this.plugin.getLogger().log(Level.WARNING,
                 "[Artemis] payload send failed for " + player.getName(), ex);
