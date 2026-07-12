@@ -28,10 +28,6 @@ hex colors where the vanilla 1.8 protocol cannot.**
 > [Apollo documentation](https://lunarclient.dev/apollo/developers).
 
 ---
-## Download 
-
-You can download this mod, and the associated plugin on [modrinth](https://modrinth.com/mod/lunar-artemis).
-
 
 ## What this is
 
@@ -44,7 +40,9 @@ This fork adds the **server side** of that: a small, official-feeling API to **d
 clients and to push **hex-colored chat** to them, with everything about the channel and wire format
 hidden behind a clean interface.
 
----
+## Download 
+
+You can download this plugin, and the associated mod on [modrinth](https://modrinth.com/mod/artemis-plugin).
 
 ## The Artemis bridge
 
