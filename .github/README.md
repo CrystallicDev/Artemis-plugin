@@ -8,7 +8,7 @@
 [![Forge](https://img.shields.io/badge/Platform-Minestom-pink)](https://minestom.net)
 [![Forge](https://img.shields.io/badge/Platform-BungeeCord-orange)](https://github.com/SpigotMC/BungeeCord)
 [![Forge](https://img.shields.io/badge/Platform-Velocity-green)](https://papermc.io/software/velocity/)
-[![Modrinth](https://img.shields.io/modrinth/dt/artemis-plugin)](https://modrinth.com/plugin/artemis-plugin)
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/artemis-plugin?logo=modrinth&label=Downloads&color=00AF5C)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nqtsu91)
 
