@@ -108,7 +108,7 @@ to call them.
 
 ## API reference
 
-`com.lunarclient.apollo.artemis.Artemis` — obtained via `Apollo.getArtemis()`.
+`com.lunarclient.apollo.artemis.Artemis` obtained via `Apollo.getArtemis()`.
 
 | Method | Description |
 |--------|-------------|
