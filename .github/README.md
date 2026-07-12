@@ -123,7 +123,7 @@ to call them.
 
 - **Channel:** `artemis:chat` (registered outgoing on startup). A client that registers this channel
   is marked as Artemis; unregistering removes the mark.
-- **Payload** (`DataOutputStream`): `byte opcode` — `0` display (`int id`, `UTF json`), `1` remove
+- **Payload** (`DataOutputStream`): `byte opcode` `0` display (`int id`, `UTF json`), `1` remove
   (`int id`), `2` clear. The JSON is the Adventure Gson form; `§x§r§r§g§g§b§b` hex is preserved.
 
 You never touch any of this directly, it is fully encapsulated by the `Artemis` interface.
