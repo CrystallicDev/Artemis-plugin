@@ -1,27 +1,22 @@
-name: Build Apollo
-on: [ push ]
+name: Build
+on:
+    push:
+        branches: [ main ]
+        tags: [ 'v*' ]
+    pull_request:
 
 jobs:
     build:
-        # Only run on PRs if the source branch is on someone else's repository.
-        if: "${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}"
         runs-on: ubuntu-latest
         permissions:
-            id-token: write
             contents: write
 
         steps:
         -   name: Checkout from GitHub
-            uses: actions/checkout@v3
-
-        -   name: Configure Google Cloud credentials
-            uses: google-github-actions/auth@v3
-            with:
-                workload_identity_provider: 'projects/824216268633/locations/global/workloadIdentityPools/github-actions/providers/github-actions-oidc'
-                service_account: 'github-actions@mw-lunarclient-maven-repo.iam.gserviceaccount.com'
+            uses: actions/checkout@v4
 
         -   name: Setup Java
-            uses: actions/setup-java@v3
+            uses: actions/setup-java@v4
             with:
                 distribution: "zulu"
                 java-version: 21
@@ -32,31 +27,15 @@ jobs:
         -   name: Determine Version
             run: echo "VERSION=$(./gradlew properties | awk '/^version:/ { print $2; }')" >> $GITHUB_ENV
 
-        -   name: Determine Status
-            run: |
-                if [ "$(echo $VERSION | grep '\-SNAPSHOT')" ]; then
-                    echo "STATUS=snapshot" >> $GITHUB_ENV
-                else
-                    echo "STATUS=release" >> $GITHUB_ENV
-                fi
-
-        -   name: Gradle Publish
-            if: "${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') }}"
-            run: ./gradlew publish
-
-        -   name: Gradle Release
-            if: "${{ (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/')) && env.STATUS == 'release' }}"
-            uses: softprops/action-gh-release@v1
+        -   name: Release
+            if: "${{ startsWith(github.ref, 'refs/tags/v') }}"
+            uses: softprops/action-gh-release@v2
             with:
                 draft: false
                 prerelease: false
-                name: "Apollo v${{ env.VERSION }}"
-                tag_name: "v${{ env.VERSION }}"
-                target_commitish: "${{ github.sha }}"
                 generate_release_notes: true
                 files: |
                     platform/bukkit/build/libs/apollo-bukkit-${{ env.VERSION }}.jar
                     platform/bungee/build/libs/apollo-bungee-${{ env.VERSION }}.jar
                     platform/velocity/build/libs/apollo-velocity-${{ env.VERSION }}.jar
-                    platform/folia/build/libs/apollo-folia-${{ env.VERSION }}.jar
                     platform/minestom/build/libs/apollo-minestom-${{ env.VERSION }}.jar
