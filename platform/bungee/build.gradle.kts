@@ -2,6 +2,10 @@ plugins {
     id("apollo.shadow-conventions")
 }
 
+base {
+    archivesName.set("Artemis-bungee")
+}
+
 setupDynamicLoader()
 
 setupDynamicDependency("baseAdventure4", "baseJarAdventure4", "adventure/4/", "libs", "adventure4", "dev")

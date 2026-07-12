@@ -2,6 +2,10 @@ plugins {
     id("apollo.shadow-conventions")
 }
 
+base {
+    archivesName.set("Artemis-velocity")
+}
+
 java {
     javaTarget(17)
 }

@@ -3,6 +3,10 @@ plugins {
     id("apollo.publish-conventions")
 }
 
+base {
+    archivesName.set("Artemis-minestom")
+}
+
 java {
     javaTarget(21)
 }
