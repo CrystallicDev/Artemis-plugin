@@ -4,30 +4,52 @@
 
 # Artemis Plugin
 
-[![Forge](https://img.shields.io/badge/Server-Bukkit-yellow)](https://getbukkit.org)
+[![Apollo](https://img.shields.io/badge/Fork%20of-Apollo-blueviolet)](https://github.com/LunarClient/Apollo)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nqtsu91)
 
 </div>
 
-**Artemis** is a Forge mod that allows Forge clients to interact with Lunar Client's Apollo plugin, through their open protobuf channel.
+**Artemis Plugin** is the server-side companion of [Artemis](https://modrinth.com/mod/lunar-artemis) (the Forge 1.8.9 mod). It is a fork of Lunar Client's [Apollo](https://github.com/LunarClient/Apollo) that adds a small **bridge** to talk to Artemis clients for things the vanilla 1.8 protocol can't express — hex-colored chat and colored lightning.
 
-The point of Artemis is to create a **compatibility** between Forge and Lunar for servers that relies on Lunar's Glowing, Waypoint, TeamView, Marker or other modules.
-This mod is "barebones", meaning there is no way to manually create a Lunar waypoint or marker. Its only purpose is to port some of Lunar's functionalities to Forge.
+Everything standard Apollo does (Glowing, Waypoint, TeamView, Marker, Cooldown, Vignette, ...) works **unchanged** — this fork only *adds* the Artemis bridge below.
 
-**Artemis** registers Lunar Client's channels when connecting to a server, so the **official Apollo plugin** can fully interact with the client.
+## The Artemis bridge
 
-## Artemis Specific Features
+Access it through Apollo, the same way on every supported platform:
 
-On top of porting Apollo's modules, Artemis adds a few features of its own that go beyond what Lunar Client itself exposes on 1.8.9 :
+```java
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.artemis.Artemis;
 
-- **Full RGB / Hex text rendering** -> Artemis renders true 24-bit hex colors (the `§x§r§r§g§g§b§b` format) **natively in the font renderer**, so they show up *everywhere* text is drawn: chat, tab list, scoreboard sidebar, team prefixes, floating nametags, and `/title` / `/subtitle`. On 1.8.9 both vanilla and Lunar fall back to the 16 legacy colors in most of these spots — Artemis lifts that limitation.
-- **Hex colors in the scoreboard & tab list** -> the vanilla 16-character limit on team prefixes/suffixes is removed client-side, so servers can send fully hex-colored player names and have them display correctly in the tab list and the sidebar.
-- **Rendering compatibility** -> the hex renderer hooks the single point every draw call goes through, so it keeps working under **OptiFine** and alongside mods that re-render the HUD themselves (such as **OldAnimations**, which rolls the tab list back to its 1.7.10 version).
+Artemis artemis = Apollo.getArtemis();
+```
 
-These features are driven entirely by what the server sends: Artemis only needs the color to be encoded in the `§x` format inside the relevant string (team prefix, title, chat component, ...).
+- **Detect Artemis clients** — `artemis.isArtemis(uuid)`. A client counts once it registers the Artemis channel (a real Lunar client does not, so you can tell them apart).
+- **Hex chat** — `artemis.chat(uuid, legacyText)` displays a message with true 24-bit hex colors (`§x§r§r§g§g§b§b`) inside the client's vanilla chat. Returns an id you can pass to `removeChat(uuid, id)` / `clearChat(uuid)`.
+- **Colored lightning** — `artemis.strikeLightning(uuid, x, y, z, color)` spawns a purely visual colored lightning bolt (there is also an overload taking explicit outer-glow and core colors).
 
-## Availability 
-|Loader|Version|
-|--------|--------|
-| Bukkit | 1.8.9 |
+All methods are **no-ops for non-Artemis players**, so they are always safe to call. Colors are ARGB ints.
+
+## Supported platforms
+
+| Platform | |
+|----------|---|
+| Bukkit / Spigot / Paper | ✅ |
+| Velocity | ✅ |
+| BungeeCord | ✅ |
+| Minestom | ✅ |
+
+Folia is not supported (there is no 1.8.9 Folia).
+
+## Download
+
+Grab the plugin for your platform on [Modrinth](https://modrinth.com/mod/lunar-artemis). The client mod is [Artemis](https://modrinth.com/mod/lunar-artemis).
+
+## Relationship to Apollo
+
+This is a fork, not a replacement — all Apollo modules are present and unmodified. For anything other than the Artemis bridge, refer to the [Apollo documentation](https://lunarclient.dev/apollo/developers). Contributions unrelated to Artemis belong upstream at [LunarClient/Apollo](https://github.com/LunarClient/Apollo).
+
+## License
+
+Inherits Apollo's MIT license.
