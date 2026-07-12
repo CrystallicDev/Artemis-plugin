@@ -45,7 +45,6 @@ listOfNotNull(
     "platform:bukkit",
     if (loadAllVersions) "platform:bungee" else null,
     if (loadAllVersions) "platform:velocity" else null,
-    if (loadAllVersions) "platform:folia" else null,
     if (loadAllVersions) "platform:minestom" else null
 ).forEach {
     include(it)
