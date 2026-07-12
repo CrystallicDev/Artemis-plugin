@@ -4,7 +4,6 @@
 
 # Artemis Plugin
 
-[![Forge](https://img.shields.io/badge/Platform-Folia-darkgreen)](https://papermc.io/software/folia/)
 [![Forge](https://img.shields.io/badge/Platform-Bukkit-yellow)](https://dev.bukkit.org)
 [![Forge](https://img.shields.io/badge/Platform-Minestom-pink)](https://minestom.net)
 [![Forge](https://img.shields.io/badge/Platform-BungeeCord-orange)](https://github.com/SpigotMC/BungeeCord)
