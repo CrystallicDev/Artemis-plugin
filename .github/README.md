@@ -28,6 +28,10 @@ hex colors where the vanilla 1.8 protocol cannot.**
 > [Apollo documentation](https://lunarclient.dev/apollo/developers).
 
 ---
+## Download 
+
+You can download this mod, and the associated plugin on [modrinth](https://modrinth.com/mod/lunar-artemis).
+
 
 ## What this is
 
