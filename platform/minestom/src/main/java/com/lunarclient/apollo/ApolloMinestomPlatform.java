@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo;
 
+import com.lunarclient.apollo.artemis.MinestomArtemis;
 import com.lunarclient.apollo.command.MinestomApolloCommand;
 import com.lunarclient.apollo.command.MinestomLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloMetadataListener;
@@ -156,6 +157,9 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
         new ApolloMetadataListener(node);
         new ApolloPlayerListener(node);
         new ApolloWorldListener(node);
+
+        MinestomArtemis artemis = new MinestomArtemis(node);
+        Apollo.setArtemis(artemis);
 
         MinecraftServer.getGlobalEventHandler().addChild(node);
 

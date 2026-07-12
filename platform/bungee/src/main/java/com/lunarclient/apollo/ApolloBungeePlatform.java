@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo;
 
+import com.lunarclient.apollo.artemis.BungeeArtemis;
 import com.lunarclient.apollo.command.BungeeApolloCommand;
 import com.lunarclient.apollo.command.BungeeLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloMetadataListener;
@@ -165,6 +166,11 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
         PluginManager pluginManager = server.getPluginManager();
         pluginManager.registerListener(this.plugin, new ApolloMetadataListener(this.plugin));
         pluginManager.registerListener(this.plugin, new ApolloPlayerListener());
+
+        BungeeArtemis artemis = new BungeeArtemis(server);
+        pluginManager.registerListener(this.plugin, artemis);
+        Apollo.setArtemis(artemis);
+
         pluginManager.registerCommand(this.plugin, BungeeApolloCommand.create());
         pluginManager.registerCommand(this.plugin, BungeeLunarClientCommand.create());
 

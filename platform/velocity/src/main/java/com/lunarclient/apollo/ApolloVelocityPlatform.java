@@ -24,6 +24,7 @@
 package com.lunarclient.apollo;
 
 import com.google.inject.Inject;
+import com.lunarclient.apollo.artemis.VelocityArtemis;
 import com.lunarclient.apollo.command.VelocityApolloCommand;
 import com.lunarclient.apollo.command.VelocityLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloMetadataListener;
@@ -234,6 +235,10 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         channelRegistrar.register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
         channelRegistrar.register(ApolloVelocityPlatform.LEGACY_PLUGIN_CHANNEL);
         channelRegistrar.register(ApolloMetadataListener.FML_HANDSHAKE_CHANNEL);
+
+        VelocityArtemis artemis = new VelocityArtemis(this.server);
+        eventManager.register(this, artemis);
+        Apollo.setArtemis(artemis);
 
         CommandManager commandManager = this.server.getCommandManager();
         commandManager.register(VelocityApolloCommand.create());
