@@ -23,7 +23,13 @@
  */
 package com.lunarclient.apollo.artemis;
 
+import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.artemis.ArtemisPlayerChatCloseEvent;
+import com.lunarclient.apollo.event.artemis.ArtemisPlayerChatOpenEvent;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.UUID;
@@ -56,9 +62,21 @@ public abstract class AbstractArtemis implements Artemis {
      */
     public static final String LIGHTNING_CHANNEL = "artemis:lightning";
 
+    /**
+     * The incoming events channel, on which Artemis clients push packet-enrichment events (chat
+     * open/close, etc.) to the server.
+     *
+     * @since 1.2.8
+     */
+    public static final String EVENTS_CHANNEL = "artemis:events";
+
     private static final int OP_DISPLAY = 0;
     private static final int OP_REMOVE = 1;
     private static final int OP_CLEAR = 2;
+
+    // Incoming opcodes on EVENTS_CHANNEL (client -> server).
+    private static final int EVENT_CHAT_OPEN = 0;
+    private static final int EVENT_CHAT_CLOSE = 1;
 
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
         .character(LegacyComponentSerializer.SECTION_CHAR)
@@ -131,6 +149,50 @@ public abstract class AbstractArtemis implements Artemis {
     @Override
     public void strikeLightning(UUID playerId, double x, double y, double z, int color) {
         this.strikeLightning(playerId, x, y, z, color, brightCore(color));
+    }
+
+    /**
+     * Parses a payload received from an Artemis client on {@link #EVENTS_CHANNEL} and posts the
+     * matching event on the Apollo bus. Platform implementations call this on message receipt.
+     *
+     * @param playerId the sender uuid
+     * @param data     the payload bytes ({@code byte opcode}, then a {@code long} client timestamp)
+     * @since 1.2.8
+     */
+    public void handleIncomingEvent(UUID playerId, byte[] data) {
+        if (playerId == null || data == null || data.length == 0) {
+            return;
+        }
+        int opcode;
+        long timeMs;
+        try (DataInputStream in = new DataInputStream(new ByteArrayInputStream(data))) {
+            opcode = in.readUnsignedByte();
+            timeMs = in.available() >= Long.BYTES ? in.readLong() : System.currentTimeMillis();
+        } catch (IOException ex) {
+            return; // malformed payload: drop it
+        }
+        switch (opcode) {
+            case EVENT_CHAT_OPEN:
+                this.post(new ArtemisPlayerChatOpenEvent(playerId, timeMs));
+                break;
+            case EVENT_CHAT_CLOSE:
+                this.post(new ArtemisPlayerChatCloseEvent(playerId, timeMs));
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Posts an event on the Apollo bus, surfacing any listener failures.
+     *
+     * @param event the event to post
+     * @since 1.2.8
+     */
+    protected void post(Event event) {
+        for (Throwable throwable : EventBus.getBus().post(event).getThrowing()) {
+            throwable.printStackTrace();
+        }
     }
 
     private void send(UUID playerId, String channel, PayloadWriter writer) {
